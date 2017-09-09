@@ -1,9 +1,13 @@
 #!/bin/bash
 
+echo "Building telldusd from github with new libraries"
 echo "Installing dependencies..."
 
 apt-get update -q
 apt-get --assume-yes install git build-essential cmake doxygen libftdi-dev  libconfuse-dev
+
+ldconfig
+
 git clone https://github.com/telldus/telldus
 cd telldus/telldus-core
 mkdir -p build
@@ -24,6 +28,9 @@ ExecStart=/usr/local/sbin/telldusd
 [Install]
 WantedBy=multi-user.target
 EOM
+
+ldconfig
+
 
 systemctl daemon-reload
 systemctl enable telldusd.service
